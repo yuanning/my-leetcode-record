@@ -1,13 +1,26 @@
+import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
+
 /**
  * Created by yn on 2016/8/25.
  */
 public class Binary {
 
-    //convert to binary
-    public int toBinary(int num) {
-        return 0;
+    public String toDecimalStr(int num) {
+        String result = "";
+        int digit = 0;
+        while (num > 0) {
+            digit = num % 2;
+            result = digit + result;
+            num /= 2;
+        }
+        return result;
     }
 
-    //example  1000   0 1 10 11 100 101 110 111 1000
+    public static void main(String[] args) {
+        Binary binary = new Binary();
+        //System.out.println(Integer.toBinaryString(8));
+        System.out.println(binary.toDecimalStr(8));
+    }
+
 
 }
