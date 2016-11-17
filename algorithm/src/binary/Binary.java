@@ -1,6 +1,4 @@
-import com.sun.org.apache.xpath.internal.SourceTree;
-
-import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
+package binary;
 
 /**
  * Created by yn on 2016/8/25.
@@ -39,6 +37,7 @@ public class Binary {
         Binary binary = new Binary();
         System.out.println(Integer.toBinaryString(16));
         System.out.println(binary.toDecimalStr(16, 8));
+        System.out.println(binary.log2(8));
     }
 
 

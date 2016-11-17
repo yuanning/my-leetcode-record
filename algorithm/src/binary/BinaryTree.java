@@ -1,3 +1,8 @@
+package binary;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by yn on 2016/9/18.
  */
@@ -69,18 +74,21 @@ public class BinaryTree {
         /**
          * initialize data
          */
-        TreeNode a = new TreeNode(1);
-        TreeNode b = new TreeNode(3);
-        TreeNode c = new TreeNode(2, a, b);
-        TreeNode d = new TreeNode(6);
-        TreeNode e = new TreeNode(9);
-        TreeNode f = new TreeNode(7, d, e);
-        TreeNode g = new TreeNode(4, c, f);
-
+//        TreeNode a = new TreeNode(1);
+//        TreeNode b = new TreeNode(3);
+//        TreeNode c = new TreeNode(2, a, b);
+//        TreeNode d = new TreeNode(6);
+//        TreeNode e = new TreeNode(9);
+//        TreeNode f = new TreeNode(7, d, e);
+//        TreeNode g = new TreeNode(4, c, f);
+//
         BinaryTree binaryTree = new BinaryTree();
-        TreeNode result = binaryTree.invertModified(g);
-        System.out.println(result);
+//        TreeNode result = binaryTree.invertModified(g);
+//        System.out.println(result);
         //binaryTree.foreach(g);
+
+        TreeNode root = new TreeNode(1, new TreeNode(2, new TreeNode(5)), new TreeNode(3));
+        binaryTree.binaryTreePaths(root);
     }
 
     //foreach binary tree
@@ -98,28 +106,20 @@ public class BinaryTree {
         }
     }
 
-}
-
-
-//invert binary tree
-class TreeNode {
-
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    public TreeNode(int val) {
-        this.val = val;
+    //binary tree paths  output example:["1->2->5", "1->3"]
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> result = new ArrayList<>();
+        recordPath(result, root, "");
+        return result;
     }
 
-    public TreeNode(int val, TreeNode child) {
-        this(val, child, null);
-    }
-
-    public TreeNode(int val, TreeNode left, TreeNode right) {
-        this.val = val;
-        this.left = left;
-        this.right = right;
+    public void recordPath(List<String> result, TreeNode node, String path) {
+        if (null == node) return;
+        if (null == node.left && null == node.right) result.add(path + node.val);
+        if (null != node.left) recordPath(result, node.left, path + node.val + "->");
+        if (null != node.right) recordPath(result, node.right, path + node.val + "->");
     }
 
 }
+
+
