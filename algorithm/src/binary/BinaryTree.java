@@ -7,8 +7,6 @@ import java.util.List;
  * Created by yn on 2016/9/18.
  */
 public class BinaryTree {
-
-    //my initial solution
     public TreeNode invert(TreeNode treeNode) {
         if (null != treeNode) {
             TreeNode left = treeNode.left;
