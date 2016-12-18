@@ -1,10 +1,9 @@
 package binary;
 
 
-import com.sun.org.apache.xpath.internal.SourceTree;
-
-import javax.xml.bind.SchemaOutputResolver;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 /**
  * Created by yn on 2016/11/3.
@@ -51,31 +50,70 @@ public class BinaryDepth {
         }
     }
 
-    //Binary Tree Level Order Traversal
+    /**
+     *   3
+        / \
+       9  20
+         /  \
+       15   7
+     return its level order traversal as:
+     [
+     [3],
+     [9,20],
+     [15,7]
+     ]
+     */
     public static List<List<Integer>> levelOrder(TreeNode root) {
-        List<List<Integer>> list = new LinkedList<>();
-        Queue<TreeNode> queue = new LinkedList<TreeNode>();
-        queue.add(root);
+        List<List<Integer>> result = new LinkedList<>();
+        if (null == root) return result;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
         while (!queue.isEmpty()) {
-            TreeNode current = queue.poll();
-            System.out.println(current.val);
-            if (null != current.left) queue.offer(current.left);
-            if (null != current.right) queue.offer(current.right);
+            int levelNum = queue.size();
+            List<Integer> subList = new LinkedList<>();
+            for (int i=0; i<levelNum; i++) {
+                TreeNode node = queue.poll();
+                subList.add(node.val);
+                if (node.left!=null) {
+                    queue.add(node.left);
+                }
+                if (node.right!=null) {
+                    queue.add(node.right);
+                }
+            }
+            result.add(subList);
         }
-        return list;
+        return result;
     }
+
+    public static List<List<Integer>> levelOrderByDfs(TreeNode root) {
+        List<List<Integer>> result = new LinkedList<>();
+        levelOrder(result, root, 0);
+        return result;
+    }
+
+    public static void levelOrder(List<List<Integer>> list, TreeNode root, int level) {
+        if (null==root) return;
+        if (list.size()<=level) {
+            list.add(new LinkedList<Integer>());
+        }
+        list.get(level).add(root.val);
+        levelOrder(list, root.left, level+1);
+        levelOrder(list, root.right, level+1);
+    }
+
 
     public static void main(String[] args) {
 //        TreeNode root = new TreeNode(1, new TreeNode(2, new TreeNode(4, new TreeNode(8), new TreeNode(9)), new TreeNode(5, new TreeNode(10), new TreeNode(11)))
 //        , new TreeNode(3, new TreeNode(6, new TreeNode(12), new TreeNode(13)), new TreeNode(7, new TreeNode(14), new TreeNode(15))));
-        TreeNode root = new TreeNode(1, new TreeNode(2));
-        int minDepth = BinaryDepth.minDepth_(root);
-        int maxDepth = BinaryDepth.maxDepth(root);
-        System.out.println("minDepth is " + minDepth);
-        System.out.println("maxDepth is " + maxDepth);
+        //TreeNode root = new TreeNode(1, new TreeNode(2));
+        //int minDepth = BinaryDepth.minDepth_(root);
+        //int maxDepth = BinaryDepth.maxDepth(root);
+        //System.out.println("minDepth is " + minDepth);
+        //System.out.println("maxDepth is " + maxDepth);
 
-        TreeNode test = new TreeNode(3, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(7)));
-        List result = BinaryDepth.levelOrder(test);
+        TreeNode test = new TreeNode(3, new TreeNode(9, new TreeNode(6), new TreeNode(5)), new TreeNode(20, new TreeNode(15), new TreeNode(7)));
+        List result = BinaryDepth.levelOrderByDfs(test);
         System.out.println(result);
     }
 
