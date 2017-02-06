@@ -75,6 +75,23 @@ public class Binary {
         return low + high >> 1;
     }
 
+    //将十进制整数形式转换成127.0.0.1形式的ip地址
+    public static String longToIP(long longIp){
+        StringBuffer sb = new StringBuffer("");
+        //直接右移24位
+        sb.append(String.valueOf((longIp >>> 24)));
+        sb.append(".");
+        //将高8位置0，然后右移16位
+        sb.append(String.valueOf((longIp & 0x00FFFFFF) >>> 16));
+        sb.append(".");
+        //将高16位置0，然后右移8位
+        sb.append(String.valueOf((longIp & 0x0000FFFF) >>> 8));
+        sb.append(".");
+        //将高24位置0
+        sb.append(String.valueOf((longIp & 0x000000FF)));
+        return sb.toString();
+    }
+
     public static void main(String[] args) {
         Binary binary = new Binary();
         //System.out.println(Integer.toBinaryString(16));
@@ -82,6 +99,11 @@ public class Binary {
         //System.out.println(binary.log2(8));
         int[] arr = new int[]{1,2,3,5,8,9,12};
         System.out.println(binary.binarySearch_(arr, 8, 0, arr.length-1));
+
+        //ip地址转换
+        long longIp = 3520061480l;
+        System.out.println(longToIP(longIp));
+        System.out.println(longIp >>> 24);
     }
 
 
